@@ -1,15 +1,59 @@
+// See https://aka.ms/new-console-template for more information
 using Newtonsoft.Json.Linq;
 using ConsoleApp1;
 using Newtonsoft.Json;
 using System;
 
-namespace ConsoleApp1
+namespace ConsoleApp1 // Note: actual namespace depends on the project name.
 {
     internal class Program
     {
         public static Anker? Anker;
         static void Main(string[] args)
         {
+            static void Redo()
+            {
+                Console.WriteLine("\nWould you like to export another Offset/Ucas? Y = Yes, N = No");
+                string answer = Console.ReadLine();
+                if (answer.ToLower() == "y")
+                {            // showing the user there paks folder
+                    Console.Clear();
+                    Console.WriteLine($"Paks folder: {Anker.Paks}");
+                    //
+
+                    // getting the offset
+                    Console.WriteLine("\nType the asset path of the asset you want to the Offset, and Ucas file of - ↓");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    string assetPath = Console.ReadLine();
+                    Anker.SaveAsset(assetPath);
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Got Offset and Ucas!");
+
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+
+                    Console.WriteLine("\n\nInfo:");
+                    if (assetPath.Contains("FortniteGame"))
+                        assetPath = assetPath.Replace("FortniteGame", "/Game");
+                    if (assetPath.Contains(".uasset"))
+                        assetPath = assetPath.Replace(".uasset", "");
+                    if (assetPath.Contains(@"\"))
+                        assetPath = assetPath.Replace(@"\", "/");
+
+                    Console.WriteLine($"Uasset: {assetPath}");
+                    Console.WriteLine($"Offset: {Anker.Offset}");
+                    Console.WriteLine($"Ucas: {Anker.Ucas.Replace(Anker.Paks + @"\", "")}");
+                    Console.WriteLine($"Compressed: {Anker.Compressed}");
+                    Redo();
+                    Console.ReadLine();
+                }
+                else
+                {
+                    Console.WriteLine("Goodbye <3");
+                    Console.ReadLine();
+                }
+            }
+
             // stuff we just want to put 
             Console.Title = "Ankers Offset Grabber";
             //
@@ -38,25 +82,23 @@ namespace ConsoleApp1
             Console.WriteLine("\n\nInfo:");
             if (assetPath.Contains("FortniteGame"))
                 assetPath = assetPath.Replace("FortniteGame", "/Game");
-            else
-                assetPath = assetPath;
             if (assetPath.Contains(".uasset"))
                 assetPath = assetPath.Replace(".uasset", "");
-            else
-                assetPath = assetPath;
+            if (assetPath.Contains(@"\"))
+                assetPath = assetPath.Replace(@"\", "/");
+
             Console.WriteLine($"Uasset: {assetPath}");
             Console.WriteLine($"Offset: {Anker.Offset}");
             Console.WriteLine($"Ucas: {Anker.Ucas.Replace(Anker.Paks + @"\", "")}");
             Console.WriteLine($"Compressed: {Anker.Compressed}");
+            Redo();
             Console.ReadLine();
             //
+
+
         }
     }
 }
-
-
-
-
 public static class Testing
 {
 
