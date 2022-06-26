@@ -11,90 +11,64 @@ namespace ConsoleApp1 // Note: actual namespace depends on the project name.
         public static Anker? Anker;
         static void Main(string[] args)
         {
+            Redo();
             static void Redo()
             {
-                Console.WriteLine("\nWould you like to export another Offset/Ucas? Y = Yes, N = No");
-                string answer = Console.ReadLine();
-                if (answer.ToLower() == "y")
-                {            // showing the user there paks folder
+                // stuff we just want to put 
+                Console.Title = "Ankers Offset Grabber";
+                //
+
+                // intalizing the provider so we can use CUE4Parse to export Offsets, and Ucas files
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                if (Anker.goingagain == true)
+                {
                     Console.Clear();
                     Console.WriteLine($"Paks folder: {Anker.Paks}");
-                    //
-
-                    // getting the offset
-                    Console.WriteLine("\nType the asset path of the asset you want to the Offset, and Ucas file of - ↓");
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    string assetPath = Console.ReadLine();
-                    Anker.SaveAsset(assetPath);
-                    Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Got Offset and Ucas!");
-
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-
-                    Console.WriteLine("\n\nInfo:");
-                    if (assetPath.Contains("FortniteGame"))
-                        assetPath = assetPath.Replace("FortniteGame", "/Game");
-                    if (assetPath.Contains(".uasset"))
-                        assetPath = assetPath.Replace(".uasset", "");
-                    if (assetPath.Contains(@"\"))
-                        assetPath = assetPath.Replace(@"\", "/");
-
-                    Console.WriteLine($"Uasset: {assetPath}");
-                    Console.WriteLine($"Offset: {Anker.Offset}");
-                    Console.WriteLine($"Ucas: {Anker.Ucas.Replace(Anker.Paks + @"\", "")}");
-                    Console.WriteLine($"Compressed: {Anker.Compressed}");
-                    Redo();
-                    Console.ReadLine();
                 }
                 else
                 {
-                    Console.WriteLine("Goodbye <3");
-                    Console.ReadLine();
+                    Console.Clear();
+                    Console.WriteLine("Intalizing Provider...");
+                    Anker = new Anker(Testing.GetGameFiles());
+                    Console.WriteLine($"\nPaks folder: {Anker.Paks}");
                 }
+                //
+
+                // showing the user there paks folder
+
+                // getting the offset
+                Console.WriteLine("\nType the asset path of the asset you want to the Offset, and Ucas file of - ↓");
+                Console.ForegroundColor = ConsoleColor.Red;
+                string assetPath = Console.ReadLine();
+                Anker.SaveAsset(assetPath);
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Got Offset and Ucas!");
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+
+                Console.WriteLine("\n\nInfo:");
+                if (assetPath.Contains("FortniteGame"))
+                    assetPath = assetPath.Replace("FortniteGame", "/Game");
+                if (assetPath.Contains(".uasset"))
+                    assetPath = assetPath.Replace(".uasset", "");
+                if (assetPath.Contains(@"\"))
+                    assetPath = assetPath.Replace(@"\", "/");
+
+                Console.WriteLine($"Uasset: {assetPath}");
+                Console.WriteLine($"Offset: {Anker.Offset}");
+                Console.WriteLine($"Ucas: {Anker.Ucas.Replace(Anker.Paks + @"\", "")}");
+                Console.WriteLine($"Compressed: {Anker.Compressed}");
+                Console.WriteLine("\nWould you like to get another assets Ucas/Offset? Y = Yes, N = No");
+                string answer = Console.ReadLine();
+                if (answer.ToLower() == "y")
+                {
+                    Anker.goingagain = true;
+                    Redo();
+                }
+                else
+                    Environment.Exit(0);
             }
-
-            // stuff we just want to put 
-            Console.Title = "Ankers Offset Grabber";
-            //
-
-            // intalizing the provider so we can use CUE4Parse to export Offsets, and Ucas files
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("Intalizing Provider...");
-            Anker = new Anker(Testing.GetGameFiles());
-            //
-
-            // showing the user there paks folder
-            Console.WriteLine($"\nPaks folder: {Anker.Paks}");
-            //
-
-            // getting the offset
-            Console.WriteLine("\nType the asset path of the asset you want to the Offset, and Ucas file of - ↓");
-            Console.ForegroundColor = ConsoleColor.Red;
-            string assetPath = Console.ReadLine();
-            Anker.SaveAsset(assetPath);
-            Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Got Offset and Ucas!");
-
-            Console.ForegroundColor = ConsoleColor.Yellow;
-
-            Console.WriteLine("\n\nInfo:");
-            if (assetPath.Contains("FortniteGame"))
-                assetPath = assetPath.Replace("FortniteGame", "/Game");
-            if (assetPath.Contains(".uasset"))
-                assetPath = assetPath.Replace(".uasset", "");
-            if (assetPath.Contains(@"\"))
-                assetPath = assetPath.Replace(@"\", "/");
-
-            Console.WriteLine($"Uasset: {assetPath}");
-            Console.WriteLine($"Offset: {Anker.Offset}");
-            Console.WriteLine($"Ucas: {Anker.Ucas.Replace(Anker.Paks + @"\", "")}");
-            Console.WriteLine($"Compressed: {Anker.Compressed}");
-            Redo();
-            Console.ReadLine();
-            //
-
 
         }
     }
