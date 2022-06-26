@@ -1,4 +1,4 @@
-﻿using CUE4Parse.Encryption.Aes;
+using CUE4Parse.Encryption.Aes;
 using CUE4Parse.FileProvider;
 using CUE4Parse.UE4.Objects.Core.Misc;
 using CUE4Parse.UE4.Versions;
@@ -34,13 +34,10 @@ namespace ConsoleApp1
         {
             byte[] ExportedAsset = provider.SaveAsset(assetPath);
             if (ExportedAsset.Length >= 1024)
-            {
                 Compressed = true;
-            }
             else
-            {
                 Compressed = false;
-            }
+
             return ExportedAsset;
         }
     }
