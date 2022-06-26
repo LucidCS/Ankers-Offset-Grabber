@@ -20,6 +20,7 @@ namespace ConsoleApp1
         public static long Offset { get; set; }
         public static string Ucas { get; set; }
         public static bool Compressed { get; set; }
+        public static bool goingagain = false;
 
 
         public Anker(string paks)
