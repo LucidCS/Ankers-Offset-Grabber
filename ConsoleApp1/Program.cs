@@ -1,10 +1,9 @@
-﻿// See https://aka.ms/new-console-template for more information
 using Newtonsoft.Json.Linq;
 using ConsoleApp1;
 using Newtonsoft.Json;
 using System;
 
-namespace ConsoleApp1 // Note: actual namespace depends on the project name.
+namespace ConsoleApp1
 {
     internal class Program
     {
@@ -37,9 +36,18 @@ namespace ConsoleApp1 // Note: actual namespace depends on the project name.
             Console.ForegroundColor = ConsoleColor.Yellow;
 
             Console.WriteLine("\n\nInfo:");
+            if (assetPath.Contains("FortniteGame"))
+                assetPath = assetPath.Replace("FortniteGame", "/Game");
+            else
+                assetPath = assetPath;
+            if (assetPath.Contains(".uasset"))
+                assetPath = assetPath.Replace(".uasset", "");
+            else
+                assetPath = assetPath;
             Console.WriteLine($"Uasset: {assetPath}");
             Console.WriteLine($"Offset: {Anker.Offset}");
             Console.WriteLine($"Ucas: {Anker.Ucas.Replace(Anker.Paks + @"\", "")}");
+            Console.WriteLine($"Compressed: {Anker.Compressed}");
             Console.ReadLine();
             //
         }
